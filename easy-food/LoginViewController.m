@@ -21,6 +21,8 @@
     _inEmail.returnKeyType = UIReturnKeyNext;
     _inPassword.returnKeyType = UIReturnKeyNext;
     presenter=[[DisplayNearestRestaurantPresenter alloc]init];
+    
+    NSLog(@"login +++ ");
 }
 
 - (void)didReceiveMemoryWarning {
