@@ -23,6 +23,7 @@
     presenter=[[DisplayNearestRestaurantPresenter alloc]init];
     
     NSLog(@"login +++ ");
+    NSLog(@"login +++ ");
 }
 
 - (void)didReceiveMemoryWarning {
