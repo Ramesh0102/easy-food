@@ -55,5 +55,8 @@
     newCustomerDeatils[@"mobile"] = self.mobile.text;
     
     [presenter registerNewCustomer:newCustomerDeatils];
+    NSDictionary *customerDetails=newCustomerDeatils;
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:customerDetails];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"currentUserDictionary"];
 }
 @end

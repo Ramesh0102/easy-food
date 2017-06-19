@@ -11,7 +11,7 @@
 @interface LoginViewController (){
     DisplayNearestRestaurantPresenter *presenter;
     DisplayNearestRestaurantService *service;
-    NSString *logedinUserEmail;
+    NSDictionary *currentUserDetails;
 }
 @end
 
@@ -25,8 +25,12 @@
     _inEmail.delegate = self;
     _inPassword.delegate=self;
     
-    if ([[NSUserDefaults standardUserDefaults]valueForKey:@"currentUserEmail"]) {
-        
+    //NSDictionary * myDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"dictionaryKey"];
+    
+    NSData *dictionaryData = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUserDictionary"];
+    currentUserDetails = [NSKeyedUnarchiver unarchiveObjectWithData:dictionaryData];
+    
+    if (currentUserDetails!=nil) {
         //go straight to my home-screen-activity
         [self gotoHome];
     }
@@ -42,14 +46,15 @@
         [_inPassword becomeFirstResponder];
     } else if (textField.returnKeyType==UIReturnKeyDone) {
         [_inPassword resignFirstResponder];
-        [presenter checkEmail:_inEmail.text andPassword:_inPassword.text completion:^(BOOL succeeded) {
+        [presenter checkEmail:_inEmail.text andPassword:_inPassword.text completion:^(BOOL succeeded, NSDictionary *userDctionary){
             
-            if (succeeded==YES) {
-                //save user email in NSUserDefault
-                NSString *valueToSave = _inEmail.text;
-                [[NSUserDefaults standardUserDefaults] setObject:valueToSave forKey:@"currentUserEmail"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
+            if (succeeded) {
                 
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:userDctionary];
+                [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"currentUserDictionary"];
+                
+                [[NSUserDefaults standardUserDefaults] synchronize];
+
                 //goto home
                 [self gotoHome];
         

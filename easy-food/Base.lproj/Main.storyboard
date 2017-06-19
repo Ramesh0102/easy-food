@@ -60,7 +60,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="reusableCell" id="xrL-2j-ZTV">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="reusableCell" id="xrL-2j-ZTV" customClass="CustomCollectionViewCellForHome">
                                 <rect key="frame" x="0.0" y="0.0" width="159" height="125"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -68,11 +68,11 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eqx-dM-FbQ">
-                                            <rect key="frame" x="17" y="8" width="128" height="73"/>
+                                            <rect key="frame" x="17" y="8" width="128" height="86"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="10" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Details" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZaD-L9-Bl3">
-                                            <rect key="frame" x="17" y="96" width="128" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8i1-cb-JkB">
+                                            <rect key="frame" x="18" y="96" width="127" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                             <nil key="textColor"/>
@@ -80,6 +80,10 @@
                                         </label>
                                     </subviews>
                                 </view>
+                                <connections>
+                                    <outlet property="imageView" destination="eqx-dM-FbQ" id="qja-z5-zfn"/>
+                                    <outlet property="label" destination="8i1-cb-JkB" id="Cfj-SJ-qBy"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -87,7 +91,18 @@
                             <outlet property="delegate" destination="Jr7-NK-YXS" id="otj-gb-5dA"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="bBt-mK-Oh8"/>
+                    <navigationItem key="navigationItem" id="bBt-mK-Oh8">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="Gvz-U9-alr">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="pLv-B2-lNX">
+                                <rect key="frame" x="276" y="7" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Logout"/>
+                                <connections>
+                                    <action selector="logoutClicked:" destination="Jr7-NK-YXS" eventType="touchUpInside" id="6Um-5B-56a"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TyY-HD-WJo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -132,7 +147,7 @@
         <!--Sign In-->
         <scene sceneID="aCB-Mw-wzA">
             <objects>
-                <viewController id="NsX-p2-C68" customClass="LoginViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="loginViewController" id="NsX-p2-C68" customClass="LoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YJZ-C5-4xz"/>
                         <viewControllerLayoutGuide type="bottom" id="t6i-1s-PQ7"/>

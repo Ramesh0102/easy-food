@@ -23,18 +23,15 @@
     [self.service addNewCustomer:userDetails];
 }
 
-- (void) checkEmail:(NSString *)email andPassword:(NSString *)password completion:(void(^)(BOOL succeeded))handler{
+- (void) checkEmail:(NSString *)email andPassword:(NSString *)password completion:(void(^)(BOOL succeeded, NSDictionary *userDctionary)) handler{
     
-    NSString *result=[_service checkEneteredEmail:email andPassword:password];
-    if ([result isEqualToString:@"nil"]) {
-        handler(NO);
-    }else{
-        handler(YES);
-    }
-}
-
-- (void) getCurrentUserAddressForEmail:(NSString *) email completion:(void(^)(NSDictionary* userDetails)) callback{
-    callback([_service getCurrentUserAddressForEmail:email]);
+    [_service checkEmail:email andPassword:password completion:^(BOOL succeeded, NSDictionary *userDctionary) {
+        if (succeeded) {
+            handler(YES,userDctionary);
+        }else{
+            handler(NO,nil);
+        }
+    }];
 }
 
 - (void) getRestaurantDetails:(NSString *) email{

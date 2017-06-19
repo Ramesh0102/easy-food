@@ -11,7 +11,6 @@
 @interface DisplayNearestRestaurantsViewController (){
     
     NSMutableDictionary *restaurantsDictionary;
-    NSString *logedinUserEmail;
     NSDictionary *currentUserDetails;
 }
 
@@ -26,18 +25,18 @@
     
     // Uncomment the following line to preserve selection between presentations
     // self.clearsSelectionOnViewWillAppear = NO;
-    logedinUserEmail=[[NSUserDefaults standardUserDefaults]
-                      stringForKey:@"currentUserEmail"];
+    
     _service=[[DisplayNearestRestaurantService alloc]init];
     _presenter=[[DisplayNearestRestaurantPresenter alloc]initWithService:_service];
 
     // Register cell classes
     //[self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
-    [_presenter getCurrentUserAddressForEmail:logedinUserEmail completion:^(NSDictionary *userDetails) {
-        currentUserDetails=userDetails;
-       self.navigationItem.title=[NSString stringWithFormat:@"%@",[userDetails valueForKey:@"address"]];
-    }];
+    currentUserDetails=[[NSUserDefaults standardUserDefaults] objectForKey:@"currentUserDetails"];
+    
+    NSLog(@"%@",currentUserDetails);
+    
+    self.navigationItem.title=[NSString stringWithFormat:@"%@",[currentUserDetails objectForKey:@"address"]];
     
 }
 
@@ -59,22 +58,31 @@
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return restaurantsDictionary.count;
+    return 1;//restaurantsDictionary.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
    
     // Configure the cell
-    [_presenter getRestaurantDetails:[NSString stringWithFormat:@"%@",[currentUserDetails valueForKey:@"zipcode"]]];
+    //[_presenter getRestaurantDetails:[NSString stringWithFormat:@"%@",[currentUserDetails valueForKey:@"zipcode"]]];
     
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"reusableCell" forIndexPath:indexPath];
-    UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
-    //recipeImageView.image = [UIImage imageNamed:[recipeImages objectAtIndex:indexPath.row]];
-    UILabel *label=(UILabel *)[cell viewWithTag:10];
+    CustomCollectionViewCellForHome  *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"reusableCell" forIndexPath:indexPath];
     
+    //[_presenter getRestaurantDetails:<#(NSString *)#>];
     
+    cell.imageView.image=[UIImage imageNamed:@"home_icon.png"];
+    cell.label.text=@"....";
+
     return cell;
 }
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    return CGSizeMake(150, 150);
+}
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
+    return UIEdgeInsetsMake(5, 5, 5, 5);
+}
+
 
 #pragma mark <UICollectionViewDelegate>
 
@@ -107,20 +115,14 @@
  }
  */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- (void)logoutClicked:(id)sender {
+    
+    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    
+    NSString * storyboardName = @"Main";
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
+    UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
+    [self presentViewController:vc animated:YES completion:nil];
+}
 @end

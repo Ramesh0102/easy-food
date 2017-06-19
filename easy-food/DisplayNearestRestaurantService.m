@@ -43,38 +43,27 @@
    //2077 [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (NSString *) checkEneteredEmail:(NSString *) inEmail andPassword:(NSString *) inPwd{
+- (void) checkEmail:(NSString *)email andPassword:(NSString *)password completion:(void(^)(BOOL succeeded, NSDictionary *userDctionary)) handler{
     
     CoreDataClass *coreDataStack=[CoreDataClass getCoreDataStack];
     NSManagedObjectContext *context=coreDataStack.persistentContainer.viewContext;
     NSFetchRequest *fetchRequest=[[NSFetchRequest alloc]init];
     NSEntityDescription *entity=[NSEntityDescription entityForName:@"RegisteredCustomers" inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
-    NSPredicate *predicate=[NSPredicate predicateWithFormat:@"email == %@ AND password == %@", inEmail, inPwd];
+    NSPredicate *predicate=[NSPredicate predicateWithFormat:@"email == %@ AND password == %@", email, password];
     [fetchRequest setPredicate:predicate];
     
     NSError *error=nil;
     NSArray *result=[context executeFetchRequest:fetchRequest error:&error];
     
+    NSManagedObject *managedObject=result[0];
+    NSArray *keys = [[[managedObject entity] attributesByName] allKeys];
+    NSDictionary *dict = [managedObject dictionaryWithValuesForKeys:keys];
     if (result.count > 0 ){
-        return @"success";
+        handler(YES,dict);
+    }else{
+        handler(NO,nil);
     }
-    return @"nil";
-}
-
-- (NSManagedObject *) getCurrentUserAddressForEmail:(NSString *) email{
-    
-    CoreDataClass *coreDataStack=[CoreDataClass getCoreDataStack];
-    NSManagedObjectContext *context=coreDataStack.persistentContainer.viewContext;
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"RegisteredCustomers"];
-    request.predicate = [NSPredicate predicateWithFormat:@"email == %@", email];
-    //request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"id" ascending:YES]];
-    
-    NSArray *results = [context executeFetchRequest:request error:nil];
-    
-    //NSLog(@"\nfullName: %@",[results valueForKey:@"fullname"]);
-    //NSLog(@"\n %@ , count: %lu", results, (unsigned long)results.count);
-    return results[0];
 }
 
 - (void) getRestaurantDetails:(NSString *) email{

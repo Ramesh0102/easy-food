@@ -10,12 +10,14 @@
 #import <CoreLocation/CoreLocation.h>
 #import "DisplayNearestRestaurantPresenter.h"
 #import "DisplayNearestRestaurantService.h"
+#import "CustomCollectionViewCellForHome.h"
 
-@interface DisplayNearestRestaurantsViewController : UICollectionViewController
+@interface DisplayNearestRestaurantsViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout>
 
 @property (weak, nonatomic) UICollectionViewController *collectionViewController;
 @property (strong, nonatomic) DisplayNearestRestaurantPresenter *presenter;
 @property (strong, nonatomic) DisplayNearestRestaurantService *service;
+- (IBAction)logoutClicked:(id)sender;
 
 
 @end

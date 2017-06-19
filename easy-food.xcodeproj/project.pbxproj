@@ -16,6 +16,7 @@
 		7F3730A41EF5D8E3007E6720 /* RegisteredCustomers+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F3730A21EF5D8E3007E6720 /* RegisteredCustomers+CoreDataProperties.m */; };
 		7F3F2CBC1EF6008500D8F970 /* CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F3F2CBB1EF6008500D8F970 /* CoreDataClass.m */; };
 		7F3F2CC11EF6189900D8F970 /* ErrorCodes.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F3F2CC01EF6189900D8F970 /* ErrorCodes.m */; };
+		7FDD77CA1EF846270010A142 /* CustomCollectionViewCellForHome.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDD77C91EF846270010A142 /* CustomCollectionViewCellForHome.m */; };
 		7FF937611EF4E5A100C18D01 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF937601EF4E5A100C18D01 /* main.m */; };
 		7FF937641EF4E5A100C18D01 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF937631EF4E5A100C18D01 /* AppDelegate.m */; };
 		7FF9376A1EF4E5A100C18D01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FF937681EF4E5A100C18D01 /* Main.storyboard */; };
@@ -46,6 +47,8 @@
 		7F3F2CBB1EF6008500D8F970 /* CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataClass.m; sourceTree = "<group>"; };
 		7F3F2CBF1EF6189900D8F970 /* ErrorCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ErrorCodes.h; sourceTree = "<group>"; };
 		7F3F2CC01EF6189900D8F970 /* ErrorCodes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorCodes.m; sourceTree = "<group>"; };
+		7FDD77C81EF846270010A142 /* CustomCollectionViewCellForHome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCollectionViewCellForHome.h; sourceTree = "<group>"; };
+		7FDD77C91EF846270010A142 /* CustomCollectionViewCellForHome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCollectionViewCellForHome.m; sourceTree = "<group>"; };
 		7FF9375C1EF4E5A100C18D01 /* easy-food.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "easy-food.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FF937601EF4E5A100C18D01 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7FF937621EF4E5A100C18D01 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -141,6 +144,8 @@
 			children = (
 				7F3730761EF5A340007E6720 /* DisplayNearestRestaurantsViewController.h */,
 				7F3730771EF5A340007E6720 /* DisplayNearestRestaurantsViewController.m */,
+				7FDD77C81EF846270010A142 /* CustomCollectionViewCellForHome.h */,
+				7FDD77C91EF846270010A142 /* CustomCollectionViewCellForHome.m */,
 				7F3730871EF5BEBE007E6720 /* LoginViewController.h */,
 				7F3730881EF5BEBE007E6720 /* LoginViewController.m */,
 				7F37308A1EF5BEE2007E6720 /* RegisterCustomerViewController.h */,
@@ -255,6 +260,7 @@
 				7F3730891EF5BEBE007E6720 /* LoginViewController.m in Sources */,
 				7FF937641EF4E5A100C18D01 /* AppDelegate.m in Sources */,
 				7FF937611EF4E5A100C18D01 /* main.m in Sources */,
+				7FDD77CA1EF846270010A142 /* CustomCollectionViewCellForHome.m in Sources */,
 				7F37307B1EF5A373007E6720 /* DisplayNearestRestaurantPresenter.m in Sources */,
 				7FF9376D1EF4E5A100C18D01 /* easy_food.xcdatamodeld in Sources */,
 				7F37307E1EF5A3BE007E6720 /* DisplayNearestRestaurantService.m in Sources */,

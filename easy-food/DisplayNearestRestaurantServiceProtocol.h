@@ -10,8 +10,7 @@
 @protocol DisplayNearestRestaurantServiceProtocol <NSObject>
 
 - (void) addNewCustomer: (NSMutableDictionary *) customerDteails;
-- (NSString *) checkEneteredEmail:(NSString *) inEmail andPassword:(NSString *) inPwd;
-- (NSDictionary *) getCurrentUserAddressForEmail:(NSString *) email;
+- (void) checkEmail:(NSString *)email andPassword:(NSString *)password completion:(void(^)(BOOL succeeded, NSDictionary *userDctionary)) handler;
 - (void) getRestaurantDetails:(NSString *) email;
 
 @end
