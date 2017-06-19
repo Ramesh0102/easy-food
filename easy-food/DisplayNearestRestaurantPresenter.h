@@ -24,6 +24,6 @@
 - (instancetype)initWithService: (id<DisplayNearestRestaurantServiceProtocol>) service;
 - (void) registerNewCustomer:(NSMutableDictionary *) userDetails;
 
-- (void) checkEmail:(NSString *)email andPassword:(NSString *)password completion:(void(^)(BOOL succeeded, NSError *error))handler;
+- (void) checkEmail:(NSString *)email andPassword:(NSString *)password completion:(void(^)(BOOL succeeded))handler;
 
 @end

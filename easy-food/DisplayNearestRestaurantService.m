@@ -29,22 +29,21 @@
    //2077 [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (NSString *) giveMePasswordIfEmailExist:(NSString *) email{
+- (NSString *) checkEneteredEmail:(NSString *) inEmail andPassword:(NSString *) inPwd{
     
     CoreDataClass *coreDataStack=[CoreDataClass getCoreDataStack];
     NSManagedObjectContext *context=coreDataStack.persistentContainer.viewContext;
     NSFetchRequest *fetchRequest=[[NSFetchRequest alloc]init];
     NSEntityDescription *entity=[NSEntityDescription entityForName:@"RegisteredCustomers" inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
-    NSPredicate *predicate=[NSPredicate predicateWithFormat:@"SELF contains[c] %@",email];
+    NSPredicate *predicate=[NSPredicate predicateWithFormat:@"email == %@ AND password == %@", inEmail, inPwd];
     [fetchRequest setPredicate:predicate];
     
     NSError *error=nil;
-    NSMutableArray *fetchedObjects=[[context executeFetchRequest:fetchRequest error:&error] mutableCopy];
-    if (fetchedObjects==nil) {
-        return @"Not Registered";
-    }else{
-        return fetchedObjects[0];
+    NSArray *result=[context executeFetchRequest:fetchRequest error:&error];
+    
+    if (result.count > 0 ){
+        return @"success";
     }
     return @"nil";
 }
