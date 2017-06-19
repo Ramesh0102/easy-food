@@ -23,18 +23,14 @@
     [self.service addNewCustomer:userDetails];
 }
 
-- (void) checkEmail:(NSString *)email andPassword:(NSString *)password completion:(void(^)(BOOL succeeded, NSError *error))handler{
+- (void) checkEmail:(NSString *)email andPassword:(NSString *)password completion:(void(^)(BOOL succeeded))handler{
     
-    NSString *pwd=[_service giveMePasswordIfEmailExist:email];
-    
-    NSError *error=nil;
-    if (![pwd isEqualToString:@"nil"] ) {
-        handler(YES, error);
+    NSString *result=[_service checkEneteredEmail:email andPassword:password];
+    if ([result isEqualToString:@"nil"]) {
+        handler(NO);
     }else{
-     //   error=@"You are not a easy-food member!";
-        handler(NO, error);
+        handler(YES);
     }
-  //  handler(NO);
 }
 
 @end

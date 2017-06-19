@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "DisplayNearestRestaurantPresenter.h"
+#import "DisplayNearestRestaurantService.h"
 
 @interface LoginViewController : UIViewController<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *inEmail;
 @property (weak, nonatomic) IBOutlet UITextField *inPassword;
+@property (weak, nonatomic) IBOutlet UITabBarController *tabbarController;
 - (IBAction)forgotPassword:(id)sender;
 - (IBAction)registerNewCustomer:(id)sender;
 
