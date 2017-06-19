@@ -12,14 +12,14 @@
     
     NSMutableDictionary *restaurantsDictionary;
     NSString *logedinUserEmail;
-    NSMutableDictionary *currentUserAddressDictionary;
+    NSDictionary *currentUserDetails;
 }
 
 @end
 
 @implementation DisplayNearestRestaurantsViewController
 
-static NSString * const reuseIdentifier = @"reusableCell";
+//static NSString * const reuseIdentifier = @"reusableCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -32,8 +32,13 @@ static NSString * const reuseIdentifier = @"reusableCell";
     _presenter=[[DisplayNearestRestaurantPresenter alloc]initWithService:_service];
 
     // Register cell classes
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-    //[_presenter getDeliveryAddress:(int) zipcode];
+    //[self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    
+    [_presenter getCurrentUserAddressForEmail:logedinUserEmail completion:^(NSDictionary *userDetails) {
+        currentUserDetails=userDetails;
+       self.navigationItem.title=[NSString stringWithFormat:@"%@",[userDetails valueForKey:@"address"]];
+    }];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,10 +63,15 @@ static NSString * const reuseIdentifier = @"reusableCell";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-    
+   
     // Configure the cell
-    restaurantsDictionary=[_presenter getRestaurantDetails:logedinUserEmail];
+    [_presenter getRestaurantDetails:[NSString stringWithFormat:@"%@",[currentUserDetails valueForKey:@"zipcode"]]];
+    
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"reusableCell" forIndexPath:indexPath];
+    UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
+    //recipeImageView.image = [UIImage imageNamed:[recipeImages objectAtIndex:indexPath.row]];
+    UILabel *label=(UILabel *)[cell viewWithTag:10];
+    
     
     return cell;
 }

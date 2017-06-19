@@ -9,8 +9,7 @@
 
 #import "DisplayNearestRestaurantService.h"
 @interface DisplayNearestRestaurantService(){
-    
-    NSMutableDictionary *currentUserAddress;
+
 }
 
 @end
@@ -63,26 +62,19 @@
     return @"nil";
 }
 
-- (void) getCurrentUserAddressForEmail:(NSString *) email{
+- (NSManagedObject *) getCurrentUserAddressForEmail:(NSString *) email{
     
     CoreDataClass *coreDataStack=[CoreDataClass getCoreDataStack];
     NSManagedObjectContext *context=coreDataStack.persistentContainer.viewContext;
-//    NSFetchRequest *fetchRequest=[[NSFetchRequest alloc]init];
-//    NSEntityDescription *entity=[NSEntityDescription entityForName:@"RegisteredCustomers" inManagedObjectContext:context];
-//    [fetchRequest setEntity:entity];
-//    
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"RegisteredCustomers"];
     request.predicate = [NSPredicate predicateWithFormat:@"email == %@", email];
     //request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"id" ascending:YES]];
     
     NSArray *results = [context executeFetchRequest:request error:nil];
     
-    NSError *error=nil;
-    NSArray *result=[context executeFetchRequest:fetchRequest error:&error];
-    currentUserAddress=[[NSMutableDictionary alloc]init];
-    
-    
-    
+    //NSLog(@"\nfullName: %@",[results valueForKey:@"fullname"]);
+    //NSLog(@"\n %@ , count: %lu", results, (unsigned long)results.count);
+    return results[0];
 }
 
 - (void) getRestaurantDetails:(NSString *) email{

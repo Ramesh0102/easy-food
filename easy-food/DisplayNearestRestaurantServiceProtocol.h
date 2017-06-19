@@ -11,7 +11,7 @@
 
 - (void) addNewCustomer: (NSMutableDictionary *) customerDteails;
 - (NSString *) checkEneteredEmail:(NSString *) inEmail andPassword:(NSString *) inPwd;
-- (void) getCurrentUserAddressForEmail:(NSString *) email;
+- (NSDictionary *) getCurrentUserAddressForEmail:(NSString *) email;
 - (void) getRestaurantDetails:(NSString *) email;
 
 @end

@@ -33,13 +33,13 @@
     }
 }
 
-- (void) getCurrentUserAddressForEmail:(NSString *) email{
-    
+- (void) getCurrentUserAddressForEmail:(NSString *) email completion:(void(^)(NSDictionary* userDetails)) callback{
+    callback([_service getCurrentUserAddressForEmail:email]);
 }
 
 - (void) getRestaurantDetails:(NSString *) email{
     
-    [_service getRestaurantDetails:email];
+    //[_service getRestaurantDetails:email];
 }
 
 @end
