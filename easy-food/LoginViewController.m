@@ -11,6 +11,7 @@
 @interface LoginViewController (){
     DisplayNearestRestaurantPresenter *presenter;
     DisplayNearestRestaurantService *service;
+    NSString *logedinUserEmail;
 }
 @end
 
@@ -24,6 +25,11 @@
     _inEmail.delegate = self;
     _inPassword.delegate=self;
     
+    if ([[NSUserDefaults standardUserDefaults]valueForKey:@"currentUserEmail"]) {
+        
+        //go straight to my home-screen-activity
+        [self gotoHome];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,10 +43,16 @@
     } else if (textField.returnKeyType==UIReturnKeyDone) {
         [_inPassword resignFirstResponder];
         [presenter checkEmail:_inEmail.text andPassword:_inPassword.text completion:^(BOOL succeeded) {
+            
             if (succeeded==YES) {
+                //save user email in NSUserDefault
+                NSString *valueToSave = _inEmail.text;
+                [[NSUserDefaults standardUserDefaults] setObject:valueToSave forKey:@"currentUserEmail"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
                 //goto home
-                [self presentViewController:_tabbarController animated:YES completion:nil];
-                NSLog(@"Not working");
+                [self gotoHome];
+        
             } else {
                 //display error
                 UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"Error!" message:@"please regiter with us." preferredStyle:UIAlertControllerStyleAlert];
@@ -56,9 +68,16 @@
     return YES;
 }
 
+
+-(void) gotoHome{
+    //goto home
+    NSString * storyboardName = @"Main";
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
+    UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"home"];
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
 - (IBAction)forgotPassword:(id)sender {
 }
 
-- (IBAction)registerNewCustomer:(id)sender {
-}
 @end

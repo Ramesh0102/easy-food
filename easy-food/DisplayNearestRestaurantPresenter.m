@@ -33,4 +33,13 @@
     }
 }
 
+- (void) getCurrentUserAddressForEmail:(NSString *) email{
+    
+}
+
+- (void) getRestaurantDetails:(NSString *) email{
+    
+    [_service getRestaurantDetails:email];
+}
+
 @end

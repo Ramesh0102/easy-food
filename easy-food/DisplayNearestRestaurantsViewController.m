@@ -10,8 +10,9 @@
 
 @interface DisplayNearestRestaurantsViewController (){
     
-    double coordinates;
     NSMutableDictionary *restaurantsDictionary;
+    NSString *logedinUserEmail;
+    NSMutableDictionary *currentUserAddressDictionary;
 }
 
 @end
@@ -25,42 +26,20 @@ static NSString * const reuseIdentifier = @"reusableCell";
     
     // Uncomment the following line to preserve selection between presentations
     // self.clearsSelectionOnViewWillAppear = NO;
-    
+    logedinUserEmail=[[NSUserDefaults standardUserDefaults]
+                      stringForKey:@"currentUserEmail"];
+    _service=[[DisplayNearestRestaurantService alloc]init];
+    _presenter=[[DisplayNearestRestaurantPresenter alloc]initWithService:_service];
+
     // Register cell classes
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-    
-    // statements to get current location
-    self.locationManager = [[CLLocationManager alloc]init];
-    self.locationManager.delegate=self;
-    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
-    
-    _coder=[[CLGeocoder alloc]init];
-    
-    //checking version
-    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-        [self.locationManager requestWhenInUseAuthorization];
-    }
+    //[_presenter getDeliveryAddress:(int) zipcode];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-# pragma mark <CLLocationManagerDelegate>
-
-- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
-    
-    if (status==kCLAuthorizationStatusAuthorizedWhenInUse) {
-        [self.locationManager startUpdatingLocation];
-    }
-}
-- (void)locationManager:(CLLocationManager *)manager
-     didUpdateLocations:(NSArray<CLLocation *> *)locations{
-    
-    
-}
-
 
 /*
  #pragma mark - Navigation
@@ -82,6 +61,7 @@ static NSString * const reuseIdentifier = @"reusableCell";
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
     // Configure the cell
+    restaurantsDictionary=[_presenter getRestaurantDetails:logedinUserEmail];
     
     return cell;
 }

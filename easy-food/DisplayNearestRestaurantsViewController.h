@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "DisplayNearestRestaurantPresenter.h"
+#import "DisplayNearestRestaurantService.h"
 
-@interface DisplayNearestRestaurantsViewController : UICollectionViewController <CLLocationManagerDelegate>
+@interface DisplayNearestRestaurantsViewController : UICollectionViewController
 
-@property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) CLGeocoder *coder;
 @property (weak, nonatomic) UICollectionViewController *collectionViewController;
+@property (strong, nonatomic) DisplayNearestRestaurantPresenter *presenter;
+@property (strong, nonatomic) DisplayNearestRestaurantService *service;
+
 
 @end

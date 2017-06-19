@@ -14,9 +14,8 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *inEmail;
 @property (weak, nonatomic) IBOutlet UITextField *inPassword;
-@property (weak, nonatomic) IBOutlet UITabBarController *tabbarController;
-- (IBAction)forgotPassword:(id)sender;
-- (IBAction)registerNewCustomer:(id)sender;
 
+- (IBAction)forgotPassword:(id)sender;
+-(void) gotoHome;
 
 @end
