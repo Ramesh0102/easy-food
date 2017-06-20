@@ -34,9 +34,9 @@
     }];
 }
 
-- (void) getRestaurantDetails:(NSString *) email{
+- (void) getRestaurantDetails:(NSString *)address completion:(void(^) (NSDictionary *restaurants)) handler{
     
-    //[_service getRestaurantDetails:email];
+    NSDictionary *restaurantInfo= [_service getRestaurantDetails:address];
+    
 }
-
 @end

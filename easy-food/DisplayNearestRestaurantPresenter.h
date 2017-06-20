@@ -25,6 +25,8 @@
 - (void) registerNewCustomer:(NSMutableDictionary *) userDetails;
 
 - (void) checkEmail:(NSString *)email andPassword:(NSString *)password completion:(void(^)(BOOL succeeded, NSDictionary *userDctionary)) handler;
-//- (void) getRestaurantDetails:(NSString *) ;
+- (void) getRestaurantDetails:(NSString *)address completion:(void(^) (NSDictionary *restaurants)) handler;
+
+
 
 @end

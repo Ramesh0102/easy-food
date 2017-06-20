@@ -10,7 +10,7 @@
 
 @interface DisplayNearestRestaurantsViewController (){
     
-    NSMutableDictionary *restaurantsDictionary;
+    NSDictionary *restaurantsDictionary;
     NSDictionary *currentUserDetails;
 }
 
@@ -32,11 +32,10 @@
     // Register cell classes
     //[self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
-    currentUserDetails=[[NSUserDefaults standardUserDefaults] objectForKey:@"currentUserDetails"];
+    NSData *dictionaryData = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUserDictionary"];
+    currentUserDetails = [NSKeyedUnarchiver unarchiveObjectWithData:dictionaryData];
     
-    NSLog(@"%@",currentUserDetails);
-    
-    self.navigationItem.title=[NSString stringWithFormat:@"%@",[currentUserDetails objectForKey:@"address"]];
+    self.navigationItem.title=[NSString stringWithFormat:@"%@",[[NSKeyedUnarchiver unarchiveObjectWithData:dictionaryData] objectForKey:@"address"]];
     
 }
 
@@ -68,7 +67,13 @@
     
     CustomCollectionViewCellForHome  *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"reusableCell" forIndexPath:indexPath];
     
-    //[_presenter getRestaurantDetails:<#(NSString *)#>];
+    NSString *address=[NSString stringWithFormat:@"%@, %@, %@", [currentUserDetails objectForKey:@"address"], [currentUserDetails objectForKey:@"city"], [currentUserDetails objectForKey:@"zipcode"]];
+    [_presenter getRestaurantDetails:address completion:^(NSDictionary *restaurants){
+        
+        restaurantsDictionary=restaurants;
+        
+        
+    }];
     
     cell.imageView.image=[UIImage imageNamed:@"home_icon.png"];
     cell.label.text=@"....";

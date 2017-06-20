@@ -9,6 +9,8 @@
 
 #import "DisplayNearestRestaurantService.h"
 @interface DisplayNearestRestaurantService(){
+    
+    NSDictionary *restaurantDictionary;
 
 }
 
@@ -48,13 +50,10 @@
     CoreDataClass *coreDataStack=[CoreDataClass getCoreDataStack];
     NSManagedObjectContext *context=coreDataStack.persistentContainer.viewContext;
     NSFetchRequest *fetchRequest=[[NSFetchRequest alloc]init];
-    NSEntityDescription *entity=[NSEntityDescription entityForName:@"RegisteredCustomers" inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    NSPredicate *predicate=[NSPredicate predicateWithFormat:@"email == %@ AND password == %@", email, password];
-    [fetchRequest setPredicate:predicate];
-    
-    NSError *error=nil;
-    NSArray *result=[context executeFetchRequest:fetchRequest error:&error];
+    fetchRequest.entity=[NSEntityDescription entityForName:@"RegisteredCustomers" inManagedObjectContext:context];
+    fetchRequest.predicate=[NSPredicate predicateWithFormat:@"email == %@ AND password == %@", email, password];
+
+    NSArray *result=[context executeFetchRequest:fetchRequest error:nil];
     
     NSManagedObject *managedObject=result[0];
     NSArray *keys = [[[managedObject entity] attributesByName] allKeys];
@@ -66,8 +65,32 @@
     }
 }
 
-- (void) getRestaurantDetails:(NSString *) email{
+- (NSDictionary *) getRestaurantDetails:(NSString *) address{
     
+    __block int latitude;
+    __block int longitude;
+    
+    CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
+    [geoCoder geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
+        CLPlacemark *placemark = [placemarks objectAtIndex:0];
+        NSLog(@"%@",placemark);
+        CLLocation *location = placemark.location;
+        CLLocationCoordinate2D coordinate = location.coordinate;
+       // NSLog(@"Latitude %f", coordinate.latitude);
+       // NSLog(@"Longitude %f", coordinate.longitude);
+        latitude=coordinate.latitude;
+        longitude=coordinate.longitude;
+    }];
+    
+   // NSString *strURL=[NSString stringWithFormat:@"https:query.yahooapis.com/v1/public/yql?q=select%%20*%%20from%%20local.search%%20where%%20zip%%3D%%27%@%%27%%20and%%20query%%3D%%27%@%%27&format=json&callback=",where,what];
+//    
+//    NSURL *url=[NSURL URLWithString:strURL];
+//    
+//    NSData *data=[NSData dataWithContentsOfURL:url];
+//    NSString *strData=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+//    NSDictionary *dictionary=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+//    coordinates=[[[dictionary objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"result"];
+    return restaurantDictionary;
 }
 
 @end
