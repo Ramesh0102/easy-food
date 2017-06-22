@@ -20,6 +20,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    }
+- (void) loadView{
+    [super loadView];
     service=[[DisplayNearestRestaurantService alloc]init];
     presenter=[[DisplayNearestRestaurantPresenter alloc]initWithService:service];
     _inEmail.delegate = self;
@@ -30,10 +33,11 @@
     NSData *dictionaryData = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUserDictionary"];
     currentUserDetails = [NSKeyedUnarchiver unarchiveObjectWithData:dictionaryData];
     
-    if (currentUserDetails!=nil) {
+    if ([currentUserDetails valueForKey:@"email"]) {
         //go straight to my home-screen-activity
         [self gotoHome];
     }
+
 }
 
 - (void)didReceiveMemoryWarning {

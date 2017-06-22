@@ -6,12 +6,14 @@
 //  Copyright © 2017 remotetiger.com. All rights reserved.
 //
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 @protocol DisplayNearestRestaurantServiceProtocol <NSObject>
 
 - (void) addNewCustomer: (NSMutableDictionary *) customerDteails;
 - (void) checkEmail:(NSString *)email andPassword:(NSString *)password completion:(void(^)(BOOL succeeded, NSDictionary *userDctionary)) handler;
-- (NSDictionary *) getRestaurantDetails:(NSString *) address;
-
+- (NSArray *) searchReastaurants:(NSString *) address;
+- (NSDictionary *) restaurantDetails: (NSString *) restaurantID;
+- (CLLocationCoordinate2D ) getLocationFromAddressString: (NSString*) addressStr;
 @end
 

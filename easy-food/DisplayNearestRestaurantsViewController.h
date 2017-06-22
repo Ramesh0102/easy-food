@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CoreLocation/CoreLocation.h>
 #import "DisplayNearestRestaurantPresenter.h"
 #import "DisplayNearestRestaurantService.h"
 #import "CustomCollectionViewCellForHome.h"
+#import <CoreLocation/CoreLocation.h>
+#import "RestaurantMenuViewController.h"
 
 @interface DisplayNearestRestaurantsViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout>
 
@@ -18,6 +19,9 @@
 @property (strong, nonatomic) DisplayNearestRestaurantPresenter *presenter;
 @property (strong, nonatomic) DisplayNearestRestaurantService *service;
 - (IBAction)logoutClicked:(id)sender;
+@property (strong, nonatomic) CLGeocoder *coder;
+- (void) didEnterZip:(NSString*)zip address:(NSString*)address;
+- (UIImage *) getThumbUrlForRow: (long) row;
 
 
 @end

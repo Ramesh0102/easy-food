@@ -10,8 +10,12 @@
 
 @interface DisplayNearestRestaurantsViewController (){
     
-    NSDictionary *restaurantsDictionary;
+    NSArray *restaurantsArray;
     NSDictionary *currentUserDetails;
+    NSString *completeAddress;
+    NSMutableArray *individualRestaurantDetails;
+    NSMutableArray *imagesList;
+    NSIndexPath *selectedIndexPath;
 }
 
 @end
@@ -22,13 +26,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
     _service=[[DisplayNearestRestaurantService alloc]init];
     _presenter=[[DisplayNearestRestaurantPresenter alloc]initWithService:_service];
-
+    
+    _coder = [[CLGeocoder alloc] init];
+    
     // Register cell classes
     //[self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
@@ -37,6 +39,25 @@
     
     self.navigationItem.title=[NSString stringWithFormat:@"%@",[[NSKeyedUnarchiver unarchiveObjectWithData:dictionaryData] objectForKey:@"address"]];
     
+    NSString *address=[NSString stringWithFormat:@"%@", [currentUserDetails objectForKey:@"address"]];
+    NSString *zipcode=[NSString stringWithFormat:@"%@",[currentUserDetails objectForKey:@"zipcode"]];
+    
+    individualRestaurantDetails=[[NSMutableArray alloc] init];
+    imagesList=[[NSMutableArray alloc]init];
+    
+    [self didEnterZip:zipcode address:address];
+    [_presenter searchReastaurants:completeAddress completion:^(NSArray *restaurants) {
+        restaurantsArray=[NSArray arrayWithArray:restaurants];
+        NSLog(@"%lu",(unsigned long)restaurantsArray.count);
+    }];
+    
+    // Uncomment the following line to preserve selection between presentations
+    // self.clearsSelectionOnViewWillAppear = NO;
+    }
+
+- (void) loadView{
+    [super loadView];
+ 
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,7 +78,7 @@
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 1;//restaurantsDictionary.count;
+    return restaurantsArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -67,58 +88,108 @@
     
     CustomCollectionViewCellForHome  *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"reusableCell" forIndexPath:indexPath];
     
-    NSString *address=[NSString stringWithFormat:@"%@, %@, %@", [currentUserDetails objectForKey:@"address"], [currentUserDetails objectForKey:@"city"], [currentUserDetails objectForKey:@"zipcode"]];
-    [_presenter getRestaurantDetails:address completion:^(NSDictionary *restaurants){
-        
-        restaurantsDictionary=restaurants;
-        
-        
-    }];
-    
-    cell.imageView.image=[UIImage imageNamed:@"home_icon.png"];
-    cell.label.text=@"....";
+    UIImage *image=[self getThumbUrlForRow:indexPath.row];
+    [imagesList addObject:image];
+    cell.imageView.image=image;
+    cell.label.text=[NSString stringWithFormat:@"%@,\n %@",[[[restaurantsArray objectAtIndex:indexPath.row] objectForKey:@"restaurant"] objectForKey:@"name"],[[[individualRestaurantDetails objectAtIndex:indexPath.row] objectForKey:@"location"] valueForKey:@"address"]];
 
     return cell;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake(150, 150);
-}
+//-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    //int numberOfCellInRow = 3;
+//    CGFloat cellWidth =  [[UIScreen mainScreen] bounds].size.width-40;
+//    return CGSizeMake(cellWidth, cellWidth-50);
+//}
+
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-    return UIEdgeInsetsMake(5, 5, 5, 5);
+    return UIEdgeInsetsMake(10, 10, 10, 10);
 }
 
 
 #pragma mark <UICollectionViewDelegate>
 
-/*
- // Uncomment this method to specify if the specified item should be highlighted during tracking
- - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
- }
- */
+//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+//    NSLog(@"touch me...");
+//    selectedIndexPath=indexPath;
+//    [self performSegueWithIdentifier:@"restaurantMenu" sender:self];
+//}
+- (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    selectedIndexPath=indexPath;
+    NSLog(@"%ld",(long)selectedIndexPath.row);
+}
 
-/*
- // Uncomment this method to specify if the specified item should be selected
- - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
- return YES;
- }
- */
 
-/*
- // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
- - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
- }
- 
- - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
- }
- 
- - (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
- }
- */
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"restaurantMenu"]) {
+        NSLog(@"%ld",(long)selectedIndexPath.row);
+        RestaurantMenuViewController *destinationVC=(RestaurantMenuViewController*)[segue destinationViewController];
+        destinationVC.individualRestaurantDetails=[individualRestaurantDetails objectAtIndex:selectedIndexPath.row];;
+        destinationVC.image=[imagesList objectAtIndex:selectedIndexPath.row];
+    }
+}
+
+- (void) didEnterZip:(NSString*)zip address:(NSString*)address {
+    
+    __block BOOL isRunLoopNested = NO;
+    __block BOOL isOperationCompleted = NO;
+    
+    [self.coder geocodeAddressString:zip completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        if (!error) {
+            CLPlacemark *place=[placemarks objectAtIndex:0];
+            //NSLog(@"%@", place);
+            completeAddress=[NSString stringWithFormat:@"%@, %@, %@, %@ %@", address, place.locality,place.administrativeArea,place.ISOcountryCode, zip];
+            //completeAddress=[NSString stringWithFormat:@"%@", zip];
+            
+        }else{
+            NSLog(@"Error!");
+        }
+        isOperationCompleted = YES;
+        if (isRunLoopNested) {
+            CFRunLoopStop(CFRunLoopGetCurrent()); // CFRunLoopRun() returns
+        }
+    }];
+    if ( ! isOperationCompleted) {
+        isRunLoopNested = YES;
+        NSLog(@"Waiting...");
+        CFRunLoopRun(); // Magic!
+        isRunLoopNested = NO;
+    }
+}
+
+- (UIImage *) getThumbUrlForRow: (long) row{
+    
+    __block BOOL isRunLoopNested = NO;
+    __block BOOL isOperationCompleted = NO;
+    __block UIImage *image;
+    
+    NSString *restId=[NSString stringWithFormat:@"%@",[[[[restaurantsArray objectAtIndex:row] objectForKey:@"restaurant"] objectForKey:@"R"] objectForKey:@"res_id"]];
+    [_presenter restaurantDetails:restId completion:^(NSDictionary *restaurant) {
+        [individualRestaurantDetails addObject:restaurant];
+        NSString *strUrl=[restaurant valueForKey:@"featured_image"];
+        if ([strUrl isEqual:@""]) {
+            strUrl=[restaurant valueForKey:@"thumb"];
+        }
+        image=[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:strUrl]]];
+        isOperationCompleted = YES;
+        if (isRunLoopNested) {
+            CFRunLoopStop(CFRunLoopGetCurrent()); // CFRunLoopRun() returns
+        }
+    }];
+    if ( ! isOperationCompleted) {
+        isRunLoopNested = YES;
+        NSLog(@"Waiting...");
+        CFRunLoopRun(); // Magic!
+        isRunLoopNested = NO;
+    }
+    if (image==nil) {
+        image=[UIImage imageNamed:@"1.jpg"];
+    }
+    return image;
+}
 
 - (void)logoutClicked:(id)sender {
     

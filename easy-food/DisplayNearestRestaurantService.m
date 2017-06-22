@@ -9,9 +9,7 @@
 
 #import "DisplayNearestRestaurantService.h"
 @interface DisplayNearestRestaurantService(){
-    
-    NSDictionary *restaurantDictionary;
-
+    CLGeocoder *coder;
 }
 
 @end
@@ -42,7 +40,7 @@
     customers.mobile=[[customerDteails objectForKey:@"mobile"] integerValue];
     
     [coreDataStack saveContext];
-   //2077 [self dismissViewControllerAnimated:YES completion:nil];
+    //2077 [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void) checkEmail:(NSString *)email andPassword:(NSString *)password completion:(void(^)(BOOL succeeded, NSDictionary *userDctionary)) handler{
@@ -52,7 +50,7 @@
     NSFetchRequest *fetchRequest=[[NSFetchRequest alloc]init];
     fetchRequest.entity=[NSEntityDescription entityForName:@"RegisteredCustomers" inManagedObjectContext:context];
     fetchRequest.predicate=[NSPredicate predicateWithFormat:@"email == %@ AND password == %@", email, password];
-
+    
     NSArray *result=[context executeFetchRequest:fetchRequest error:nil];
     
     NSManagedObject *managedObject=result[0];
@@ -65,32 +63,89 @@
     }
 }
 
-- (NSDictionary *) getRestaurantDetails:(NSString *) address{
+- (NSArray *) searchReastaurants:(NSString *) address{
     
-    __block int latitude;
-    __block int longitude;
     
-    CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
-    [geoCoder geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
-        CLPlacemark *placemark = [placemarks objectAtIndex:0];
-        NSLog(@"%@",placemark);
-        CLLocation *location = placemark.location;
-        CLLocationCoordinate2D coordinate = location.coordinate;
-       // NSLog(@"Latitude %f", coordinate.latitude);
-       // NSLog(@"Longitude %f", coordinate.longitude);
-        latitude=coordinate.latitude;
-        longitude=coordinate.longitude;
-    }];
+    CLLocationCoordinate2D coordinate=[self getLocationFromAddressString:address];
+    NSLog(@"%f, %f",coordinate.latitude,coordinate.longitude);
     
-   // NSString *strURL=[NSString stringWithFormat:@"https:query.yahooapis.com/v1/public/yql?q=select%%20*%%20from%%20local.search%%20where%%20zip%%3D%%27%@%%27%%20and%%20query%%3D%%27%@%%27&format=json&callback=",where,what];
-//    
-//    NSURL *url=[NSURL URLWithString:strURL];
-//    
-//    NSData *data=[NSData dataWithContentsOfURL:url];
-//    NSString *strData=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-//    NSDictionary *dictionary=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-//    coordinates=[[[dictionary objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"result"];
-    return restaurantDictionary;
+    //search restaurant
+    NSString *Post = [[NSString alloc] initWithFormat:@"{Page:0, Take:10}"];
+    NSData *PostData = [Post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    
+    NSString *zomatokey=@"b911890e669706c34d302c47f3709db6";
+    NSString *str=[NSString stringWithFormat:@"https://developers.zomato.com/api/v2.1/search?start=0&count=20&lat=%f&lon=%f&radius=8046.72&cuisines=1%%2C3%%2C25%%2C148%%2C73%%2C82%%2C308&category=1%%2C13&sort=rating",coordinate.latitude,coordinate.longitude];
+    
+    NSURL *url = [NSURL URLWithString:str];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
+    [req setHTTPMethod:@"POST"];
+    [req addValue:zomatokey forHTTPHeaderField:@"user-key"];
+    [req setHTTPBody:PostData];
+    
+    NSData *data = [NSURLConnection  sendSynchronousRequest:req returningResponse:NULL error:NULL];
+    //    NSString *myString = [[NSString alloc] initWithData:res encoding:NSUTF8StringEncoding];
+    //    NSLog(@"%@", myString);
+    
+    NSDictionary *restaurantsData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    
+    NSArray *searchResults =[restaurantsData objectForKey:@"restaurants"];
+    NSLog(@"%lu",(unsigned long)searchResults.count);
+    
+    return searchResults;
 }
 
+- (NSDictionary *) restaurantDetails: (NSString *) restaurantID{
+    // restaurant details
+    NSString *Post = [[NSString alloc] initWithFormat:@"{Page:0, Take:10}"];
+    NSData *PostData = [Post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    
+    NSString *zomatokey=@"b911890e669706c34d302c47f3709db6";
+    
+    NSString *strUrl=[NSString stringWithFormat:@"https://developers.zomato.com/api/v2.1/restaurant?res_id=%@",restaurantID];
+    
+    NSURL *url = [NSURL URLWithString:strUrl];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
+    [req setHTTPMethod:@"POST"];
+    [req addValue:zomatokey forHTTPHeaderField:@"user-key"];
+    [req setHTTPBody:PostData];
+    
+    NSData *data = [NSURLConnection  sendSynchronousRequest:req returningResponse:NULL error:NULL];
+    
+    NSDictionary *restaurantDetails = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    return restaurantDetails;
+}
+
+-(CLLocationCoordinate2D ) getLocationFromAddressString: (NSString*) addressStr {
+    
+    __block BOOL isRunLoopNested = NO;
+    __block BOOL isOperationCompleted = NO;
+    coder=[[CLGeocoder alloc]init];
+    __block CLLocationCoordinate2D coordinate;
+    
+    [coder geocodeAddressString:addressStr completionHandler:^(NSArray *placemarks, NSError *error)
+     {
+         if(!error)
+         {
+             CLPlacemark *placemark = [placemarks objectAtIndex:0];
+             coordinate.latitude=placemark.location.coordinate.latitude;
+             coordinate.longitude=placemark.location.coordinate.longitude;
+         }
+         else
+         {
+             NSLog(@"There was a forward geocoding error\n%@",[error localizedDescription]);
+         }
+         isOperationCompleted = YES;
+         if (isRunLoopNested) {
+             CFRunLoopStop(CFRunLoopGetCurrent()); // CFRunLoopRun() returns
+         }
+     }];
+    if ( ! isOperationCompleted) {
+        isRunLoopNested = YES;
+        NSLog(@"Waiting...");
+        CFRunLoopRun(); // Magic!
+        isRunLoopNested = NO;
+    }
+    
+    return coordinate;
+}
 @end

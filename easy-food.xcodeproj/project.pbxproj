@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F05EA8A1EFC35760038E5CF /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F05EA891EFC35760038E5CF /* CartViewController.m */; };
 		7F3730781EF5A340007E6720 /* DisplayNearestRestaurantsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F3730771EF5A340007E6720 /* DisplayNearestRestaurantsViewController.m */; };
 		7F37307B1EF5A373007E6720 /* DisplayNearestRestaurantPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F37307A1EF5A373007E6720 /* DisplayNearestRestaurantPresenter.m */; };
 		7F37307E1EF5A3BE007E6720 /* DisplayNearestRestaurantService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F37307D1EF5A3BE007E6720 /* DisplayNearestRestaurantService.m */; };
@@ -17,6 +18,11 @@
 		7F3F2CBC1EF6008500D8F970 /* CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F3F2CBB1EF6008500D8F970 /* CoreDataClass.m */; };
 		7F3F2CC11EF6189900D8F970 /* ErrorCodes.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F3F2CC01EF6189900D8F970 /* ErrorCodes.m */; };
 		7FDD77CA1EF846270010A142 /* CustomCollectionViewCellForHome.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDD77C91EF846270010A142 /* CustomCollectionViewCellForHome.m */; };
+		7FDDC59A1EFC490A005DFC92 /* CartItems+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDDC5971EFC490A005DFC92 /* CartItems+CoreDataClass.m */; };
+		7FDDC59B1EFC490A005DFC92 /* CartItems+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDDC5991EFC490A005DFC92 /* CartItems+CoreDataProperties.m */; };
+		7FDDC59E1EFC54E6005DFC92 /* StartAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDDC59D1EFC54E6005DFC92 /* StartAppViewController.m */; };
+		7FECF2991EFB6B2C006EB331 /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7FECF2981EFB6B2C006EB331 /* 1.jpg */; };
+		7FECF29C1EFB75E6006EB331 /* RestaurantMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FECF29B1EFB75E5006EB331 /* RestaurantMenuViewController.m */; };
 		7FF937611EF4E5A100C18D01 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF937601EF4E5A100C18D01 /* main.m */; };
 		7FF937641EF4E5A100C18D01 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF937631EF4E5A100C18D01 /* AppDelegate.m */; };
 		7FF9376A1EF4E5A100C18D01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FF937681EF4E5A100C18D01 /* Main.storyboard */; };
@@ -27,6 +33,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7F05EA881EFC35760038E5CF /* CartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartViewController.h; sourceTree = "<group>"; };
+		7F05EA891EFC35760038E5CF /* CartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartViewController.m; sourceTree = "<group>"; };
 		7F3730761EF5A340007E6720 /* DisplayNearestRestaurantsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayNearestRestaurantsViewController.h; sourceTree = "<group>"; };
 		7F3730771EF5A340007E6720 /* DisplayNearestRestaurantsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayNearestRestaurantsViewController.m; sourceTree = "<group>"; };
 		7F3730791EF5A373007E6720 /* DisplayNearestRestaurantPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayNearestRestaurantPresenter.h; sourceTree = "<group>"; };
@@ -49,6 +57,15 @@
 		7F3F2CC01EF6189900D8F970 /* ErrorCodes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorCodes.m; sourceTree = "<group>"; };
 		7FDD77C81EF846270010A142 /* CustomCollectionViewCellForHome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCollectionViewCellForHome.h; sourceTree = "<group>"; };
 		7FDD77C91EF846270010A142 /* CustomCollectionViewCellForHome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCollectionViewCellForHome.m; sourceTree = "<group>"; };
+		7FDDC5961EFC490A005DFC92 /* CartItems+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CartItems+CoreDataClass.h"; sourceTree = "<group>"; };
+		7FDDC5971EFC490A005DFC92 /* CartItems+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CartItems+CoreDataClass.m"; sourceTree = "<group>"; };
+		7FDDC5981EFC490A005DFC92 /* CartItems+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CartItems+CoreDataProperties.h"; sourceTree = "<group>"; };
+		7FDDC5991EFC490A005DFC92 /* CartItems+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CartItems+CoreDataProperties.m"; sourceTree = "<group>"; };
+		7FDDC59C1EFC54E6005DFC92 /* StartAppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartAppViewController.h; sourceTree = "<group>"; };
+		7FDDC59D1EFC54E6005DFC92 /* StartAppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartAppViewController.m; sourceTree = "<group>"; };
+		7FECF2981EFB6B2C006EB331 /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
+		7FECF29A1EFB75E5006EB331 /* RestaurantMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestaurantMenuViewController.h; sourceTree = "<group>"; };
+		7FECF29B1EFB75E5006EB331 /* RestaurantMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantMenuViewController.m; sourceTree = "<group>"; };
 		7FF9375C1EF4E5A100C18D01 /* easy-food.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "easy-food.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FF937601EF4E5A100C18D01 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7FF937621EF4E5A100C18D01 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -93,6 +110,10 @@
 		7FF937531EF4E5A100C18D01 = {
 			isa = PBXGroup;
 			children = (
+				7FDDC5961EFC490A005DFC92 /* CartItems+CoreDataClass.h */,
+				7FDDC5971EFC490A005DFC92 /* CartItems+CoreDataClass.m */,
+				7FDDC5981EFC490A005DFC92 /* CartItems+CoreDataProperties.h */,
+				7FDDC5991EFC490A005DFC92 /* CartItems+CoreDataProperties.m */,
 				7F37309F1EF5D8E3007E6720 /* RegisteredCustomers+CoreDataClass.h */,
 				7F3730A01EF5D8E3007E6720 /* RegisteredCustomers+CoreDataClass.m */,
 				7F3730A11EF5D8E3007E6720 /* RegisteredCustomers+CoreDataProperties.h */,
@@ -145,11 +166,17 @@
 				7F3730761EF5A340007E6720 /* DisplayNearestRestaurantsViewController.h */,
 				7F3730771EF5A340007E6720 /* DisplayNearestRestaurantsViewController.m */,
 				7FDD77C81EF846270010A142 /* CustomCollectionViewCellForHome.h */,
+				7FDDC59C1EFC54E6005DFC92 /* StartAppViewController.h */,
+				7FDDC59D1EFC54E6005DFC92 /* StartAppViewController.m */,
 				7FDD77C91EF846270010A142 /* CustomCollectionViewCellForHome.m */,
 				7F3730871EF5BEBE007E6720 /* LoginViewController.h */,
 				7F3730881EF5BEBE007E6720 /* LoginViewController.m */,
 				7F37308A1EF5BEE2007E6720 /* RegisterCustomerViewController.h */,
 				7F37308B1EF5BEE2007E6720 /* RegisterCustomerViewController.m */,
+				7FECF29A1EFB75E5006EB331 /* RestaurantMenuViewController.h */,
+				7FECF29B1EFB75E5006EB331 /* RestaurantMenuViewController.m */,
+				7F05EA881EFC35760038E5CF /* CartViewController.h */,
+				7F05EA891EFC35760038E5CF /* CartViewController.m */,
 			);
 			name = easyfoodViewControllers;
 			sourceTree = "<group>";
@@ -177,6 +204,7 @@
 		7FF9377C1EF4FA7200C18D01 /* utilityFiles */ = {
 			isa = PBXGroup;
 			children = (
+				7FECF2981EFB6B2C006EB331 /* 1.jpg */,
 				7FF9377D1EF4FD5E00C18D01 /* home_icon.png */,
 			);
 			name = utilityFiles;
@@ -241,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FF937721EF4E5A100C18D01 /* LaunchScreen.storyboard in Resources */,
+				7FECF2991EFB6B2C006EB331 /* 1.jpg in Resources */,
 				7FF9376F1EF4E5A100C18D01 /* Assets.xcassets in Resources */,
 				7FF9376A1EF4E5A100C18D01 /* Main.storyboard in Resources */,
 				7FF9377E1EF4FD5E00C18D01 /* home_icon.png in Resources */,
@@ -255,18 +284,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F3730A31EF5D8E3007E6720 /* RegisteredCustomers+CoreDataClass.m in Sources */,
+				7F05EA8A1EFC35760038E5CF /* CartViewController.m in Sources */,
 				7F3F2CBC1EF6008500D8F970 /* CoreDataClass.m in Sources */,
 				7F37308C1EF5BEE2007E6720 /* RegisterCustomerViewController.m in Sources */,
+				7FDDC59A1EFC490A005DFC92 /* CartItems+CoreDataClass.m in Sources */,
 				7F3730891EF5BEBE007E6720 /* LoginViewController.m in Sources */,
 				7FF937641EF4E5A100C18D01 /* AppDelegate.m in Sources */,
 				7FF937611EF4E5A100C18D01 /* main.m in Sources */,
 				7FDD77CA1EF846270010A142 /* CustomCollectionViewCellForHome.m in Sources */,
+				7FDDC59E1EFC54E6005DFC92 /* StartAppViewController.m in Sources */,
 				7F37307B1EF5A373007E6720 /* DisplayNearestRestaurantPresenter.m in Sources */,
+				7FECF29C1EFB75E6006EB331 /* RestaurantMenuViewController.m in Sources */,
 				7FF9376D1EF4E5A100C18D01 /* easy_food.xcdatamodeld in Sources */,
 				7F37307E1EF5A3BE007E6720 /* DisplayNearestRestaurantService.m in Sources */,
 				7F3730781EF5A340007E6720 /* DisplayNearestRestaurantsViewController.m in Sources */,
 				7F3730A41EF5D8E3007E6720 /* RegisteredCustomers+CoreDataProperties.m in Sources */,
 				7F3F2CC11EF6189900D8F970 /* ErrorCodes.m in Sources */,
+				7FDDC59B1EFC490A005DFC92 /* CartItems+CoreDataProperties.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

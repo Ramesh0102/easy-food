@@ -34,9 +34,18 @@
     }];
 }
 
-- (void) getRestaurantDetails:(NSString *)address completion:(void(^) (NSDictionary *restaurants)) handler{
+- (void) searchReastaurants:(NSString *)address completion:(void(^) (NSArray *restaurants)) handler{
+ 
+    NSArray *restaurantInfo= [_service searchReastaurants:address];
     
-    NSDictionary *restaurantInfo= [_service getRestaurantDetails:address];
-    
+    handler(restaurantInfo);    
 }
+
+
+- (void) restaurantDetails: (NSString *) restaurantID completion: (void (^) (NSDictionary * restaurant)) callback{
+    
+    NSDictionary *restaurantDetails=[_service restaurantDetails:restaurantID];
+    callback(restaurantDetails);
+}
+
 @end
