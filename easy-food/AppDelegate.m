@@ -8,7 +8,11 @@
 
 #import "AppDelegate.h"
 
-@interface AppDelegate ()
+@interface AppDelegate (){
+    
+    NSDictionary *currentUserDetails;
+
+}
 
 @end
 
@@ -17,8 +21,34 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    NSData *dictionaryData = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUserDictionary"];
+    currentUserDetails = [NSKeyedUnarchiver unarchiveObjectWithData:dictionaryData];
+    
+    if ([currentUserDetails valueForKey:@"email"]) {
+        //go straight to my home-screen-activity
+        [self gotoHome];
+    }
+
+    
     return YES;
 }
+
+-(void) gotoHome{
+    //goto home
+    
+    
+    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"home"];
+    
+    self.window.rootViewController = vc;
+    [self.window makeKeyAndVisible];
+    
+}
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {

@@ -15,13 +15,11 @@
 @property (weak, nonatomic) IBOutlet UITextField *fullName;
 @property (weak, nonatomic) IBOutlet UITextField *email;
 @property (weak, nonatomic) IBOutlet UITextField *password;
-@property (weak, nonatomic) IBOutlet UITextField *rePassword;
 @property (weak, nonatomic) IBOutlet UITextField *address;
-@property (weak, nonatomic) IBOutlet UITextField *city;
 @property (weak, nonatomic) IBOutlet UITextField *zipcode;
 @property (weak, nonatomic) IBOutlet UITextField *mobile;
 
 - (IBAction)registerCustomerWithEnteredDetails;
-
+- (void) displayAlert;
 
 @end

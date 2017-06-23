@@ -11,6 +11,7 @@
 @interface LoginViewController (){
     DisplayNearestRestaurantPresenter *presenter;
     DisplayNearestRestaurantService *service;
+    NSDictionary *currentUserDetails;
 }
 @end
 
@@ -19,11 +20,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    }
+- (void) loadView{
+    [super loadView];
     service=[[DisplayNearestRestaurantService alloc]init];
     presenter=[[DisplayNearestRestaurantPresenter alloc]initWithService:service];
     _inEmail.delegate = self;
     _inPassword.delegate=self;
     
+    self.navigationItem.title=@"Sign in";
+    self.imageView.image=[UIImage imageNamed:[NSString stringWithFormat:@"eat_sleep_code_1.png"]];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"1.jpg"]]];
+    self.view.alpha=0.8;
+    
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -32,33 +42,53 @@
 }
 
 -(BOOL) textFieldShouldReturn:(UITextField *)textField{
+    
+    //NSString *str=@"";
     if(textField.returnKeyType==UIReturnKeyNext) {
         [_inPassword becomeFirstResponder];
-    } else if (textField.returnKeyType==UIReturnKeyDone) {
+    } else if (textField.returnKeyType==UIReturnKeyDone && ![_inEmail.text isEqual:@""] && ![_inPassword.text isEqual:@""]) {
         [_inPassword resignFirstResponder];
-        [presenter checkEmail:_inEmail.text andPassword:_inPassword.text completion:^(BOOL succeeded) {
-            if (succeeded==YES) {
+        [presenter checkEmail:_inEmail.text andPassword:_inPassword.text completion:^(BOOL succeeded, NSDictionary *userDctionary){
+            
+            if (succeeded) {
+                
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:userDctionary];
+                [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"currentUserDictionary"];
+                
+                [[NSUserDefaults standardUserDefaults] synchronize];
+
                 //goto home
-                [self presentViewController:_tabbarController animated:YES completion:nil];
-                NSLog(@"Not working");
-            } else {
-                //display error
-                UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"Error!" message:@"please regiter with us." preferredStyle:UIAlertControllerStyleAlert];
-                
-                UIAlertAction *cancelAction=[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                }];
-                
-                [alert addAction:cancelAction];
-                [self presentViewController:alert animated:YES completion:nil];
+                [self gotoHome];
+            }else{
+                [self doisplayAlert];
             }
         }];
     }
+    else {
+        [self doisplayAlert];
+        
+    }
     return YES;
+}
+- (void) doisplayAlert{
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"Error!" message:@"please regiter with us or enter correct details!." preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction=[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+-(void) gotoHome{
+    //goto home
+    NSString * storyboardName = @"Main";
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
+    UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"home"];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (IBAction)forgotPassword:(id)sender {
 }
 
-- (IBAction)registerNewCustomer:(id)sender {
-}
 @end

@@ -14,9 +14,10 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *inEmail;
 @property (weak, nonatomic) IBOutlet UITextField *inPassword;
-@property (weak, nonatomic) IBOutlet UITabBarController *tabbarController;
-- (IBAction)forgotPassword:(id)sender;
-- (IBAction)registerNewCustomer:(id)sender;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
+- (IBAction)forgotPassword:(id)sender;
+-(void) gotoHome;
+- (void) doisplayAlert;
 
 @end

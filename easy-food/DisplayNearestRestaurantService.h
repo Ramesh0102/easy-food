@@ -10,8 +10,8 @@
 #import "DisplayNearestRestaurantServiceProtocol.h"
 #import "RegisteredCustomers+CoreDataClass.h"
 #import "CoreDataClass.h"
+#import <CoreLocation/CoreLocation.h>
 
 @interface DisplayNearestRestaurantService : NSObject
-
 
 @end

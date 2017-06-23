@@ -7,12 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DisplayNearestRestaurantPresenter.h"
+#import "DisplayNearestRestaurantService.h"
+#import "CustomCollectionViewCellForHome.h"
 #import <CoreLocation/CoreLocation.h>
+#import "RestaurantMenuViewController.h"
 
-@interface DisplayNearestRestaurantsViewController : UICollectionViewController <CLLocationManagerDelegate>
-
-@property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) CLGeocoder *coder;
+@interface DisplayNearestRestaurantsViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout, UICollectionViewDelegate>
 @property (weak, nonatomic) UICollectionViewController *collectionViewController;
+@property (strong, nonatomic) DisplayNearestRestaurantPresenter *presenter;
+@property (strong, nonatomic) DisplayNearestRestaurantService *service;
+
+@property (strong, nonatomic) IBOutlet UICollectionView *colectionView;
+
+
+- (IBAction)logoutClicked:(id)sender;
+@property (strong, nonatomic) CLGeocoder *coder;
+- (void) didEnterZip:(NSString*)zip address:(NSString*)address;
+- (void) downloadIndividualRestaurantDetails: (long) row;
 
 @end

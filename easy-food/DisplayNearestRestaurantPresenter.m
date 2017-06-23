@@ -23,14 +23,29 @@
     [self.service addNewCustomer:userDetails];
 }
 
-- (void) checkEmail:(NSString *)email andPassword:(NSString *)password completion:(void(^)(BOOL succeeded))handler{
+- (void) checkEmail:(NSString *)email andPassword:(NSString *)password completion:(void(^)(BOOL succeeded, NSDictionary *userDctionary)) handler{
     
-    NSString *result=[_service checkEneteredEmail:email andPassword:password];
-    if ([result isEqualToString:@"nil"]) {
-        handler(NO);
-    }else{
-        handler(YES);
-    }
+    [_service checkEmail:email andPassword:password completion:^(BOOL succeeded, NSDictionary *userDctionary) {
+        if (succeeded) {
+            handler(YES,userDctionary);
+        }else{
+            handler(NO,nil);
+        }
+    }];
+}
+
+- (void) searchReastaurants:(NSString *)address completion:(void(^) (NSArray *restaurants)) handler{
+ 
+    NSArray *restaurantInfo= [_service searchReastaurants:address];
+    
+    handler(restaurantInfo);    
+}
+
+
+- (void) restaurantDetails: (NSString *) restaurantID completion: (void (^) (NSDictionary * restaurant)) callback{
+    
+    NSDictionary *restaurantDetails=[_service restaurantDetails:restaurantID];
+    callback(restaurantDetails);
 }
 
 @end
