@@ -24,7 +24,9 @@
     service=[[DisplayNearestRestaurantService alloc]init];
     presenter=[[DisplayNearestRestaurantPresenter alloc] initWithService:service];
     presenter.delegate=self;
-    
+    self.navigationItem.title=[NSString stringWithFormat:@"Create Account "];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"2.jpg"]]];
+    self.view.alpha=0.8;
     
 }
 
@@ -44,13 +46,15 @@
 */
 - (void) registerCustomerWithEnteredDetails {
     
+    if ([_fullName.text isEqual:@""] && [_email.text isEqual:@""] && [_password.text isEqual:@""] && [_address.text isEqual:@""] && [_zipcode.text isEqual:@""] && [_mobile.text isEqual:@""]) {
+        [self displayAlert];
+    }else{
+    
     newCustomerDeatils=[[NSMutableDictionary alloc]init];
     newCustomerDeatils[@"fullname"] = self.fullName.text;
     newCustomerDeatils[@"email"] = self.email.text;
     newCustomerDeatils[@"password"] = self.password.text;
-    newCustomerDeatils[@"rePassword"] = self.rePassword.text;
     newCustomerDeatils[@"address"] = self.address.text;
-    newCustomerDeatils[@"city"] = self.city.text;
     newCustomerDeatils[@"zipcode"] = self.zipcode.text;
     newCustomerDeatils[@"mobile"] = self.mobile.text;
     
@@ -58,5 +62,16 @@
     NSDictionary *customerDetails=newCustomerDeatils;
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:customerDetails];
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"currentUserDictionary"];
+    }
+}
+
+- (void) displayAlert{
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"Error!" message:@"please regiter with us or enter correct details!." preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction=[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 @end

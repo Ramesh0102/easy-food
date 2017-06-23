@@ -11,7 +11,7 @@
 @interface RestaurantMenuViewController (){
     NSDictionary *restaurantsMenu;
     NSMutableArray *menu;
-    NSIndexPath *selectedIndex;
+    //NSIndexPath *selectedIndex;
 }
 
 @end
@@ -22,7 +22,7 @@
     [super viewDidLoad];
     
     _imageView.image=_image;
-    NSLog(@"%@",[_individualRestaurantDetails valueForKey:@"name"]);
+    //NSLog(@"%@",[_individualRestaurantDetails valueForKey:@"name"]);
     self.navigationItem.title=[_individualRestaurantDetails valueForKey:@"name"];
     _restNameAndCity.text=[_individualRestaurantDetails valueForKey:@"name"];
     _timings.text=[[_individualRestaurantDetails objectForKey:@"location"] valueForKey:@"address"];
@@ -51,20 +51,16 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    selectedIndex=indexPath;
-    //NSLog(@"index Path : %@",indexPath);
-    //[self performSegueWithIdentifier:@"cartSegue" sender:self];
-}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 70;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    NSIndexPath * indexPath = [_tableView indexPathForSelectedRow];
     if([segue.identifier isEqualToString:@"cartSegue"]){
         CartViewController* detailsController = (CartViewController*)[segue destinationViewController];
-        detailsController.itemDict=[menu objectAtIndex:selectedIndex.row];
+        detailsController.itemDict=[menu objectAtIndex:indexPath.row];
     }
 }
 

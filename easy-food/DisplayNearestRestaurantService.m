@@ -53,11 +53,8 @@
     
     NSArray *result=[context executeFetchRequest:fetchRequest error:nil];
     
-    NSManagedObject *managedObject=result[0];
-    NSArray *keys = [[[managedObject entity] attributesByName] allKeys];
-    NSDictionary *dict = [managedObject dictionaryWithValuesForKeys:keys];
     if (result.count > 0 ){
-        handler(YES,dict);
+        handler(YES,result[0]);
     }else{
         handler(NO,nil);
     }

@@ -28,15 +28,11 @@
     _inEmail.delegate = self;
     _inPassword.delegate=self;
     
-    //NSDictionary * myDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"dictionaryKey"];
+    self.navigationItem.title=@"Sign in";
+    self.imageView.image=[UIImage imageNamed:[NSString stringWithFormat:@"eat_sleep_code_1.png"]];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"1.jpg"]]];
+    self.view.alpha=0.8;
     
-    NSData *dictionaryData = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUserDictionary"];
-    currentUserDetails = [NSKeyedUnarchiver unarchiveObjectWithData:dictionaryData];
-    
-    if ([currentUserDetails valueForKey:@"email"]) {
-        //go straight to my home-screen-activity
-        [self gotoHome];
-    }
 
 }
 
@@ -46,9 +42,11 @@
 }
 
 -(BOOL) textFieldShouldReturn:(UITextField *)textField{
+    
+    //NSString *str=@"";
     if(textField.returnKeyType==UIReturnKeyNext) {
         [_inPassword becomeFirstResponder];
-    } else if (textField.returnKeyType==UIReturnKeyDone) {
+    } else if (textField.returnKeyType==UIReturnKeyDone && ![_inEmail.text isEqual:@""] && ![_inPassword.text isEqual:@""]) {
         [_inPassword resignFirstResponder];
         [presenter checkEmail:_inEmail.text andPassword:_inPassword.text completion:^(BOOL succeeded, NSDictionary *userDctionary){
             
@@ -61,22 +59,26 @@
 
                 //goto home
                 [self gotoHome];
-        
-            } else {
-                //display error
-                UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"Error!" message:@"please regiter with us." preferredStyle:UIAlertControllerStyleAlert];
-                
-                UIAlertAction *cancelAction=[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                }];
-                
-                [alert addAction:cancelAction];
-                [self presentViewController:alert animated:YES completion:nil];
+            }else{
+                [self doisplayAlert];
             }
         }];
     }
+    else {
+        [self doisplayAlert];
+        
+    }
     return YES;
 }
-
+- (void) doisplayAlert{
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"Error!" message:@"please regiter with us or enter correct details!." preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction=[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 
 -(void) gotoHome{
     //goto home

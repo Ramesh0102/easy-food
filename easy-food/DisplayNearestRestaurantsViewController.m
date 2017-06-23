@@ -30,10 +30,6 @@
     _presenter=[[DisplayNearestRestaurantPresenter alloc]initWithService:_service];
     
     _coder = [[CLGeocoder alloc] init];
-    
-    // Register cell classes
-    //[self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-    
     NSData *dictionaryData = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUserDictionary"];
     currentUserDetails = [NSKeyedUnarchiver unarchiveObjectWithData:dictionaryData];
     
@@ -48,32 +44,20 @@
     [self didEnterZip:zipcode address:address];
     [_presenter searchReastaurants:completeAddress completion:^(NSArray *restaurants) {
         restaurantsArray=[NSArray arrayWithArray:restaurants];
-        NSLog(@"%lu",(unsigned long)restaurantsArray.count);
+        //NSLog(@"%lu",(unsigned long)restaurantsArray.count);
     }];
     
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
+    for (int i=0; i<restaurantsArray.count; i++) {
+        [self downloadIndividualRestaurantDetails:i];
     }
+
+}
+
 
 - (void) loadView{
     [super loadView];
  
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -88,7 +72,11 @@
     
     CustomCollectionViewCellForHome  *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"reusableCell" forIndexPath:indexPath];
     
-    UIImage *image=[self getThumbUrlForRow:indexPath.row];
+    NSString *strUrl=[[individualRestaurantDetails objectAtIndex:indexPath.row] valueForKey:@"featured_image"];
+    UIImage* image=[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:strUrl]]];
+    if (image==nil) {
+        image=[UIImage imageNamed:@"1.jpg"];
+    }
     [imagesList addObject:image];
     cell.imageView.image=image;
     cell.label.text=[NSString stringWithFormat:@"%@,\n %@",[[[restaurantsArray objectAtIndex:indexPath.row] objectForKey:@"restaurant"] objectForKey:@"name"],[[[individualRestaurantDetails objectAtIndex:indexPath.row] objectForKey:@"location"] valueForKey:@"address"]];
@@ -107,28 +95,16 @@
     return UIEdgeInsetsMake(10, 10, 10, 10);
 }
 
-
-#pragma mark <UICollectionViewDelegate>
-
-//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-//    NSLog(@"touch me...");
-//    selectedIndexPath=indexPath;
-//    [self performSegueWithIdentifier:@"restaurantMenu" sender:self];
-//}
-- (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    selectedIndexPath=indexPath;
-    NSLog(@"%ld",(long)selectedIndexPath.row);
-}
-
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"restaurantMenu"]) {
-        NSLog(@"%ld",(long)selectedIndexPath.row);
+    NSIndexPath * indexPath = [[self.colectionView indexPathsForSelectedItems] objectAtIndex:0];
+    
+    if ([segue.destinationViewController isKindOfClass:[RestaurantMenuViewController class]]) {
+        NSLog(@"%ld",(long)indexPath.row);
+        
         RestaurantMenuViewController *destinationVC=(RestaurantMenuViewController*)[segue destinationViewController];
-        destinationVC.individualRestaurantDetails=[individualRestaurantDetails objectAtIndex:selectedIndexPath.row];;
-        destinationVC.image=[imagesList objectAtIndex:selectedIndexPath.row];
+        destinationVC.individualRestaurantDetails=[individualRestaurantDetails objectAtIndex:indexPath.row];;
+        destinationVC.image=[imagesList objectAtIndex:indexPath.row];
     }
 }
 
@@ -160,20 +136,14 @@
     }
 }
 
-- (UIImage *) getThumbUrlForRow: (long) row{
+- (void) downloadIndividualRestaurantDetails: (long) row{
     
     __block BOOL isRunLoopNested = NO;
     __block BOOL isOperationCompleted = NO;
-    __block UIImage *image;
     
     NSString *restId=[NSString stringWithFormat:@"%@",[[[[restaurantsArray objectAtIndex:row] objectForKey:@"restaurant"] objectForKey:@"R"] objectForKey:@"res_id"]];
     [_presenter restaurantDetails:restId completion:^(NSDictionary *restaurant) {
         [individualRestaurantDetails addObject:restaurant];
-        NSString *strUrl=[restaurant valueForKey:@"featured_image"];
-        if ([strUrl isEqual:@""]) {
-            strUrl=[restaurant valueForKey:@"thumb"];
-        }
-        image=[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:strUrl]]];
         isOperationCompleted = YES;
         if (isRunLoopNested) {
             CFRunLoopStop(CFRunLoopGetCurrent()); // CFRunLoopRun() returns
@@ -185,10 +155,6 @@
         CFRunLoopRun(); // Magic!
         isRunLoopNested = NO;
     }
-    if (image==nil) {
-        image=[UIImage imageNamed:@"1.jpg"];
-    }
-    return image;
 }
 
 - (void)logoutClicked:(id)sender {
