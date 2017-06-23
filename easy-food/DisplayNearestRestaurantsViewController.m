@@ -7,6 +7,8 @@
 //
 
 #import "DisplayNearestRestaurantsViewController.h"
+#import "RegisteredCustomers+CoreDataClass.h"
+#import "CoreDataClass.h"
 
 @interface DisplayNearestRestaurantsViewController (){
     
@@ -26,30 +28,41 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     _service=[[DisplayNearestRestaurantService alloc]init];
     _presenter=[[DisplayNearestRestaurantPresenter alloc]initWithService:_service];
     
     _coder = [[CLGeocoder alloc] init];
-    NSData *dictionaryData = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUserDictionary"];
-    currentUserDetails = [NSKeyedUnarchiver unarchiveObjectWithData:dictionaryData];
     
-    self.navigationItem.title=[NSString stringWithFormat:@"%@",[[NSKeyedUnarchiver unarchiveObjectWithData:dictionaryData] objectForKey:@"address"]];
+//    CoreDataClass *coreDataStack=[CoreDataClass getCoreDataStack];
+//    NSManagedObjectContext *context = coreDataStack.persistentContainer.viewContext;
+//    NSFetchRequest *fetchRequest=[[NSFetchRequest alloc]init];
+//    fetchRequest.entity=[NSEntityDescription entityForName:@"RegisteredCustomers" inManagedObjectContext:context];
+//    
+//    fetchRequest.predicate=[NSPredicate predicateWithFormat:@"email == %@", self.email];
+//    
+//    NSArray *result=[context executeFetchRequest:fetchRequest error:nil];
+//    
+//    currentUserDetails = result[0];
     
-    NSString *address=[NSString stringWithFormat:@"%@", [currentUserDetails objectForKey:@"address"]];
-    NSString *zipcode=[NSString stringWithFormat:@"%@",[currentUserDetails objectForKey:@"zipcode"]];
+    NSString *address=[[NSUserDefaults standardUserDefaults] valueForKey:@"currentUserAddress"];
+    NSString *zipcode=[[NSUserDefaults standardUserDefaults] valueForKey:@"currentUserZipcode"];
+    
+    self.navigationItem.title=[NSString stringWithFormat:@"%@",address];
     
     individualRestaurantDetails=[[NSMutableArray alloc] init];
     imagesList=[[NSMutableArray alloc]init];
     
     [self didEnterZip:zipcode address:address];
+    
     [_presenter searchReastaurants:completeAddress completion:^(NSArray *restaurants) {
         restaurantsArray=[NSArray arrayWithArray:restaurants];
         //NSLog(@"%lu",(unsigned long)restaurantsArray.count);
     }];
     
-    for (int i=0; i<restaurantsArray.count; i++) {
-        [self downloadIndividualRestaurantDetails:i];
-    }
+//    for (int i=0; i<restaurantsArray.count; i++) {
+//        [self downloadIndividualRestaurantDetails:i];
+//    }
 
 }
 
@@ -72,6 +85,7 @@
     
     CustomCollectionViewCellForHome  *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"reusableCell" forIndexPath:indexPath];
     
+    [self downloadIndividualRestaurantDetails:indexPath.row];
     NSString *strUrl=[[individualRestaurantDetails objectAtIndex:indexPath.row] valueForKey:@"featured_image"];
     UIImage* image=[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:strUrl]]];
     if (image==nil) {
@@ -159,8 +173,10 @@
 
 - (void)logoutClicked:(id)sender {
     
-    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    //NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    //[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"userStatus"];
     
     NSString * storyboardName = @"Main";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];

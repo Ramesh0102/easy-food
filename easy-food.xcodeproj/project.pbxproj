@@ -37,6 +37,14 @@
 		7FF9376F1EF4E5A100C18D01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FF9376E1EF4E5A100C18D01 /* Assets.xcassets */; };
 		7FF937721EF4E5A100C18D01 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FF937701EF4E5A100C18D01 /* LaunchScreen.storyboard */; };
 		7FF9377E1EF4FD5E00C18D01 /* home_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FF9377D1EF4FD5E00C18D01 /* home_icon.png */; };
+		DA1C58B11EFD4DAE00C4ED2B /* MapsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA1C58B01EFD4DAE00C4ED2B /* MapsViewController.m */; };
+		DA1C58B41EFD4FD000C4ED2B /* StuffTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA1C58B31EFD4FD000C4ED2B /* StuffTableViewController.m */; };
+		DA1C58B71EFD545C00C4ED2B /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA1C58B61EFD545C00C4ED2B /* DetailsViewController.m */; };
+		DA1C58BD1EFD560900C4ED2B /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = DA1C58BC1EFD560900C4ED2B /* MapAnnotation.m */; };
+		DA1C58C01EFD571200C4ED2B /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA1C58BF1EFD571200C4ED2B /* MapViewController.m */; };
+		DA1C58C31EFD579700C4ED2B /* MapPinAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = DA1C58C21EFD579700C4ED2B /* MapPinAnnotationView.m */; };
+		DA1C58C61EFD585900C4ED2B /* blueImage.gif in Resources */ = {isa = PBXBuildFile; fileRef = DA1C58C41EFD585900C4ED2B /* blueImage.gif */; };
+		DA1C58C71EFD585900C4ED2B /* goldStar.png in Resources */ = {isa = PBXBuildFile; fileRef = DA1C58C51EFD585900C4ED2B /* goldStar.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +98,20 @@
 		7FF937711EF4E5A100C18D01 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7FF937731EF4E5A100C18D01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7FF9377D1EF4FD5E00C18D01 /* home_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_icon.png; sourceTree = "<group>"; };
+		DA1C58AF1EFD4DAE00C4ED2B /* MapsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapsViewController.h; sourceTree = "<group>"; };
+		DA1C58B01EFD4DAE00C4ED2B /* MapsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapsViewController.m; sourceTree = "<group>"; };
+		DA1C58B21EFD4FD000C4ED2B /* StuffTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StuffTableViewController.h; sourceTree = "<group>"; };
+		DA1C58B31EFD4FD000C4ED2B /* StuffTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StuffTableViewController.m; sourceTree = "<group>"; };
+		DA1C58B51EFD545C00C4ED2B /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
+		DA1C58B61EFD545C00C4ED2B /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		DA1C58BB1EFD560900C4ED2B /* MapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapAnnotation.h; sourceTree = "<group>"; };
+		DA1C58BC1EFD560900C4ED2B /* MapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapAnnotation.m; sourceTree = "<group>"; };
+		DA1C58BE1EFD571200C4ED2B /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		DA1C58BF1EFD571200C4ED2B /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		DA1C58C11EFD579700C4ED2B /* MapPinAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapPinAnnotationView.h; sourceTree = "<group>"; };
+		DA1C58C21EFD579700C4ED2B /* MapPinAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapPinAnnotationView.m; sourceTree = "<group>"; };
+		DA1C58C41EFD585900C4ED2B /* blueImage.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = blueImage.gif; sourceTree = "<group>"; };
+		DA1C58C51EFD585900C4ED2B /* goldStar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goldStar.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +194,7 @@
 				7F85ED891EFCBB8C000CFFFB /* validation */,
 				7F3F2CBE1EF6187000D8F970 /* Error_codes */,
 				7F3F2CB91EF6006200D8F970 /* coredata */,
+				DA1C58AE1EFD4D7F00C4ED2B /* Maps */,
 				7FF937791EF4F9BB00C18D01 /* easyfoodViewControllers */,
 				7FF9377A1EF4F9E800C18D01 /* easyfoodPresenters */,
 				7FF9377B1EF4FA1400C18D01 /* easyfoodServices */,
@@ -191,6 +214,8 @@
 		7FF9375F1EF4E5A100C18D01 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DA1C58C41EFD585900C4ED2B /* blueImage.gif */,
+				DA1C58C51EFD585900C4ED2B /* goldStar.png */,
 				7FF937601EF4E5A100C18D01 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -248,6 +273,25 @@
 				7FF9377D1EF4FD5E00C18D01 /* home_icon.png */,
 			);
 			name = utilityFiles;
+			sourceTree = "<group>";
+		};
+		DA1C58AE1EFD4D7F00C4ED2B /* Maps */ = {
+			isa = PBXGroup;
+			children = (
+				DA1C58AF1EFD4DAE00C4ED2B /* MapsViewController.h */,
+				DA1C58B01EFD4DAE00C4ED2B /* MapsViewController.m */,
+				DA1C58B21EFD4FD000C4ED2B /* StuffTableViewController.h */,
+				DA1C58B31EFD4FD000C4ED2B /* StuffTableViewController.m */,
+				DA1C58B51EFD545C00C4ED2B /* DetailsViewController.h */,
+				DA1C58B61EFD545C00C4ED2B /* DetailsViewController.m */,
+				DA1C58BB1EFD560900C4ED2B /* MapAnnotation.h */,
+				DA1C58BC1EFD560900C4ED2B /* MapAnnotation.m */,
+				DA1C58BE1EFD571200C4ED2B /* MapViewController.h */,
+				DA1C58BF1EFD571200C4ED2B /* MapViewController.m */,
+				DA1C58C11EFD579700C4ED2B /* MapPinAnnotationView.h */,
+				DA1C58C21EFD579700C4ED2B /* MapPinAnnotationView.m */,
+			);
+			name = Maps;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -313,9 +357,11 @@
 				7FECF2991EFB6B2C006EB331 /* 1.jpg in Resources */,
 				7F85ED8F1EFCC32B000CFFFB /* 2.jpg in Resources */,
 				7FF9376F1EF4E5A100C18D01 /* Assets.xcassets in Resources */,
+				DA1C58C71EFD585900C4ED2B /* goldStar.png in Resources */,
 				7F85ED8D1EFCC1F0000CFFFB /* registeronline_keyboard.jpg in Resources */,
 				7FF9376A1EF4E5A100C18D01 /* Main.storyboard in Resources */,
 				7F85ED8B1EFCBFED000CFFFB /* eat_sleep_code_1.png in Resources */,
+				DA1C58C61EFD585900C4ED2B /* blueImage.gif in Resources */,
 				7FF9377E1EF4FD5E00C18D01 /* home_icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -334,16 +380,22 @@
 				7FDDC59A1EFC490A005DFC92 /* CartItems+CoreDataClass.m in Sources */,
 				7F3730891EF5BEBE007E6720 /* LoginViewController.m in Sources */,
 				7FF937641EF4E5A100C18D01 /* AppDelegate.m in Sources */,
+				DA1C58BD1EFD560900C4ED2B /* MapAnnotation.m in Sources */,
 				7FF937611EF4E5A100C18D01 /* main.m in Sources */,
+				DA1C58B41EFD4FD000C4ED2B /* StuffTableViewController.m in Sources */,
 				7FDD77CA1EF846270010A142 /* CustomCollectionViewCellForHome.m in Sources */,
 				7FDDC59E1EFC54E6005DFC92 /* StartAppViewController.m in Sources */,
 				7F37307B1EF5A373007E6720 /* DisplayNearestRestaurantPresenter.m in Sources */,
+				DA1C58C01EFD571200C4ED2B /* MapViewController.m in Sources */,
 				7FECF29C1EFB75E6006EB331 /* RestaurantMenuViewController.m in Sources */,
 				7FF9376D1EF4E5A100C18D01 /* easy_food.xcdatamodeld in Sources */,
 				7F37307E1EF5A3BE007E6720 /* DisplayNearestRestaurantService.m in Sources */,
 				7F3730781EF5A340007E6720 /* DisplayNearestRestaurantsViewController.m in Sources */,
 				7F3730A41EF5D8E3007E6720 /* RegisteredCustomers+CoreDataProperties.m in Sources */,
 				7F3F2CC11EF6189900D8F970 /* ErrorCodes.m in Sources */,
+				DA1C58C31EFD579700C4ED2B /* MapPinAnnotationView.m in Sources */,
+				DA1C58B71EFD545C00C4ED2B /* DetailsViewController.m in Sources */,
+				DA1C58B11EFD4DAE00C4ED2B /* MapsViewController.m in Sources */,
 				7FDDC59B1EFC490A005DFC92 /* CartItems+CoreDataProperties.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

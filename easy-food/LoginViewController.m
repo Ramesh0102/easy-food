@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#import "DisplayNearestRestaurantsViewController.h"
 
 @interface LoginViewController (){
     DisplayNearestRestaurantPresenter *presenter;
@@ -52,8 +53,13 @@
             
             if (succeeded) {
                 
-                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:userDctionary];
-                [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"currentUserDictionary"];
+                //NSData *data = [NSKeyedArchiver archivedDataWithRootObject:userDctionary];
+                
+                
+                [[NSUserDefaults standardUserDefaults] setValue:_inEmail.text forKey:@"currentUserEmail"];
+                [[NSUserDefaults standardUserDefaults] setValue:[userDctionary valueForKey:@"address"] forKey:@"currentUserAddress"];
+                [[NSUserDefaults standardUserDefaults] setValue:[userDctionary valueForKey:@"zipcode"] forKey:@"currentUserZipcode"];
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"userStatus"];
                 
                 [[NSUserDefaults standardUserDefaults] synchronize];
 
@@ -85,6 +91,12 @@
     NSString * storyboardName = @"Main";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
     UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"home"];
+    
+    DisplayNearestRestaurantsViewController * vcD = [storyboard instantiateViewControllerWithIdentifier:@"nrRest"];
+    vcD.email = _inEmail.text;
+    vcD.password = _inPassword.text;
+
+    
     [self presentViewController:vc animated:YES completion:nil];
 }
 

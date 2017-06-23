@@ -7,10 +7,13 @@
 //
 
 #import "AppDelegate.h"
+#import "DisplayNearestRestaurantsViewController.h"
 
 @interface AppDelegate (){
     
     NSDictionary *currentUserDetails;
+    NSString * email;
+    NSString *password;
 
 }
 
@@ -22,14 +25,17 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    NSData *dictionaryData = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUserDictionary"];
-    currentUserDetails = [NSKeyedUnarchiver unarchiveObjectWithData:dictionaryData];
+    email = [[NSUserDefaults standardUserDefaults] valueForKey:@"currentUserEmail"];
     
-    if ([currentUserDetails valueForKey:@"email"]) {
+    BOOL status = [[NSUserDefaults standardUserDefaults] boolForKey:@"userStatus"];
+    
+    
+    if (status) {
         //go straight to my home-screen-activity
         [self gotoHome];
     }
 
+    //[self gotoHome];
     
     return YES;
 }
@@ -37,12 +43,13 @@
 -(void) gotoHome{
     //goto home
     
-    
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    
     UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"home"];
+    
+    DisplayNearestRestaurantsViewController * vcD = [storyboard instantiateViewControllerWithIdentifier:@"nrRest"];
+    vcD.email = email;
     
     self.window.rootViewController = vc;
     [self.window makeKeyAndVisible];

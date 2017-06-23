@@ -18,6 +18,10 @@
 @property (strong, nonatomic) DisplayNearestRestaurantPresenter *presenter;
 @property (strong, nonatomic) DisplayNearestRestaurantService *service;
 
+@property (strong, nonatomic) NSString *email;
+@property (strong, nonatomic) NSString *password;
+
+
 @property (strong, nonatomic) IBOutlet UICollectionView *colectionView;
 
 

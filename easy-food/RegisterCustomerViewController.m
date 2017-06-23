@@ -7,6 +7,7 @@
 //
 
 #import "RegisterCustomerViewController.h"
+#import "DisplayNearestRestaurantsViewController.h"
 
 @interface RegisterCustomerViewController (){
     DisplayNearestRestaurantService *service;
@@ -46,9 +47,9 @@
 */
 - (void) registerCustomerWithEnteredDetails {
     
-    if ([_fullName.text isEqual:@""] && [_email.text isEqual:@""] && [_password.text isEqual:@""] && [_address.text isEqual:@""] && [_zipcode.text isEqual:@""] && [_mobile.text isEqual:@""]) {
-        [self displayAlert];
-    }else{
+//    if ([_fullName.text isEqual:@""] && [_email.text isEqual:@""] && [_password.text isEqual:@""] && [_address.text isEqual:@""] && [_zipcode.text isEqual:@""] && [_mobile.text isEqual:@""]) {
+//        [self displayAlert];
+//    }else{
     
     newCustomerDeatils=[[NSMutableDictionary alloc]init];
     newCustomerDeatils[@"fullname"] = self.fullName.text;
@@ -59,10 +60,23 @@
     newCustomerDeatils[@"mobile"] = self.mobile.text;
     
     [presenter registerNewCustomer:newCustomerDeatils];
-    NSDictionary *customerDetails=newCustomerDeatils;
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:customerDetails];
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"currentUserDictionary"];
-    }
+    
+    NSString * storyboardName = @"Main";
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
+    
+    DisplayNearestRestaurantsViewController * vcD = [storyboard instantiateViewControllerWithIdentifier:@"nrRest"];
+    vcD.email = self.email.text;
+
+    
+//    
+       [[NSUserDefaults standardUserDefaults] setValue:self.email.text forKey:@"currentUserEmail"];
+    [[NSUserDefaults standardUserDefaults] setValue:_address.text forKey:@"currentUserAddress"];
+    [[NSUserDefaults standardUserDefaults] setValue:_zipcode.text forKey:@"currentUserZipcode"];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"userStatus"];
+//        
+       [[NSUserDefaults standardUserDefaults] synchronize];
+//        
+//    }
 }
 
 - (void) displayAlert{
